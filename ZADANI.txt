@@ -1,0 +1,13 @@
+1.na vstupu bude pole swaggeru ktere budou mit ve jmene sve api name
+2.cyklem projdu toto pole 
+3. pro kazdy prvek udelam:
+	- vytvorim slozku 1.urovne se jmenem api
+	- uvnitr teto slozky vytvorim pom.mxl
+	- pom.xml nasetuju podle pravidel
+	
+	- vytvorim slozku 2.urovne se jmenem api + verze
+	- uvnitr teto slozky vytvorim pom.mxl
+	- pom.xml nasetuju podle pravidel
+	- vytvorim slozku src
+	- dovnitr ni nakopiruju swagger a prejmenuju ho
+	- nakopiruju do nej api-properties a edituju podle pravidel
