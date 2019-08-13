@@ -1,0 +1,113 @@
+swagger: "2.0"
+info:
+  description: Creates item of itemtype ElektronickyPodpis by reindexing given item
+  version: "001"
+  title: CRT_ElektronickyPodpis
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: Swagger API team
+basePath: /DMS/CRT_ElektronickyPodpis
+schemes:
+  - https
+consumes:
+  - application/json
+  - application/xml
+produces:
+  - application/json
+  - application/xml
+paths:
+  /:
+    post:
+      produces:
+        - application/json
+        - application/xml
+        - text/xml
+        - text/html
+      parameters:
+        - in: body
+          name: Input
+          required: false
+          schema:
+            type: object
+            properties:
+              ItemReference:
+                type: string
+                description: Odkaz na dokument
+              ElektronickyPodpis__DatumPlatnostiDo:
+                type: string
+                format: date-time
+              ElektronickyPodpis__CertifikacniAutorita:
+                type: string
+              CasoveRazitko__Hash:
+                type: string
+              CasoveRazitko__DatumPlatnostiOd:
+                type: string
+                format: date-time
+              CasoveRazitko__DatumPlatnostiDo:
+                type: string
+                format: date-time
+              CasoveRazitko__CertifikacniAutorita:
+                type: string
+              ZDROJ_BIN:
+                type: string
+                description: The value is dependent on ZDROJ_TYP. It could be reference to local file or URL or CM_ID
+              ZDROJ_TYP:
+                type: string
+                description: "{CM_ID, URL, FILE}"
+              CHECK_OUT:
+                type: integer
+                format: int64
+                description: "Check out item before processing in case of ZDROJ_TYP=CM_ID? (1-Yes, 0-No)"
+              CHECK_IN:
+                type: integer
+                format: int64
+                description: "Check in item after processing in case of ZDROJ_TYP=CM_ID? (1-Yes, 0-No)"
+        - name: USERID_L2
+          in: header
+          description: Consumer user ID
+          required: true
+          type: string
+          x-useForUserTranslation: true
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: object
+            properties:
+              CM_ID:
+                type: string
+                description: ID of created item
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+            required:
+              - CM_ID
+        default:
+          description: unexpected error
+          schema:
+            type: object
+            properties:
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+definitions:
+  ErrorModel:
+    type: object
+    required:
+      - errorCode
+      - errorDesc
+      - resultCode
+    properties:
+      resultCode:
+        type: string
+      errorCode:
+        type: string
+      errorDesc:
+        type: string
+x-tif:
+  application: DMS
+  apiName: CRT_ElektronickyPodpis
+  apiVersion: "001"
+  messageType: XML
+  messageVersion: "2"
+  operationType: active
