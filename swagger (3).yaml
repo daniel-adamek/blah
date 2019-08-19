@@ -1,0 +1,77 @@
+swagger: "2.0"
+info:
+  version: "001"
+  title: UPDATE_BINARY_ATTACHMENT
+  description: Aktualizuje binární přílohu
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: Swagger API team
+basePath: /DMS/UPDATE_BINARY_ATTACHMENT
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:
+    post:
+      produces:
+        - application/json
+      parameters:
+        - name: input
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              NewVersion:
+                type: integer
+                description: "Má se vytvořit nová verze položky (1), nebo přepsat stávající (0)? Default je vytvořit novou verzi."
+              PidNew:
+                type: string
+                description: "ID polozky itemtypu UFO, nove uplodovany dokument"
+              PidOld:
+                type: string
+                description: "ID polozky, ke ktere bude pripojena nova binarni priloha"
+              UrlNew:
+                type: string
+                description: url adresa nové verze dokumentu
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+            properties:
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+        default:
+          description: unexpected error
+          schema:
+            type: object
+            properties:
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+definitions:
+  ErrorModel:
+    type: object
+    properties:
+      errorDesc:
+        type: string
+      resultCode:
+        type: string
+      errorCode:
+        type: string
+    required:
+      - resultCode
+      - errorCode
+      - errorDesc
+x-tif:
+  application: IPE
+  apiName: UPDATE_BINARY_ATTACHMENT
+  apiVersion: "001"
+  messageType: XML
+  messageVersion: "2"
+  operationType: active
