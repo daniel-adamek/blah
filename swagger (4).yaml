@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  version: "001"
+  title: UPDATE_DOCUMENT_ATTACHMENT
+  description: "Metoda, která aktualizuje přílohu dokumentu v DMS podepsaným dokumentem. Po update a vytvoření elektronického podpisu uklidí dočasný dokument z UFO itemtype"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: Swagger API team
+basePath: /DMS/UPDATE_DOCUMENT_ATTACHMENT
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:
+    post:
+      produces:
+        - application/json
+      parameters:
+        - name: input
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              CasoveRazitko__CertifikacniAutorita:
+                type: string
+                example: test
+              CasoveRazitko__DatumPlatnostiDo:
+                type: string
+                format: date-time
+                example: "2020-03-20 09:24:14"
+              CasoveRazitko__DatumPlatnostiOd:
+                type: string
+                format: date-time
+                example: "2020-03-20 09:24:14"
+              CasoveRazitko__Hash:
+                type: string
+                example: test
+              ElektronickyPodpis__CertifikacniAutorita:
+                type: string
+                example: test
+              ElektronickyPodpis__DatumPlatnostiDo:
+                type: string
+                format: date-time
+                example: "2020-03-20 09:24:14"
+              NewVersion:
+                type: integer
+                description: "Má se vytvořit nová verze položky (1), nebo přepsat stávající (0)? Default je vytvořit novou verzi."
+                example: "0"
+              PidNew:
+                type: string
+                description: "ID polozky itemtypu UFO, nove uplodovany dokument"
+                example: 96 3 ICM8 icmnlsdb16 DokumentProduktu59 26 A1001001A19H08B34659C2395718 A19H08B34659C239571 14 1341
+              PidOld:
+                type: string
+                description: "ID polozky, ke ktere bude pripojena nova binarni priloha"
+                example: 96 3 ICM8 icmnlsdb16 DokumentProduktu59 26 A1001001A19H08B34659C2395718 A19H08B34659C239571 14 1341
+              UrlNew:
+                type: string
+                description: url adresa nov� verze dokumentu
+                example: "https://print2tstx/production_online/outputpage?data=rO0ABXNyABlqYXZheC5jcnlwdG8uU2VhbGVkT2JqZWN0PjY9psO3VHACAARbAA1lbmNvZGVkUGFyYW1zdAACW0JbABBlbmNyeXB0ZWRDb250ZW50cQB%2BAAFMAAlwYXJhbXNBbGd0ABJMamF2YS9sYW5nL1N0cmluZztMAAdzZWFsQWxncQB%2BAAJ4cHB1cgACW0Ks8xf4BghU4AIAAHhwAAAAqOo8Rcd57VBbRqC82vxTrpxSR9Q8wpSGK7qc0AdfJNFgo71u518KKe0JgX74yZyzbUfNDuVdLRpkzopuV8ehrBej%2ByXrPZ3EHd0Ez7Id8bpa5qcrVpM70TWu11FMlAeNOwBnMJF6AZPw1zrrCVjCzRExk7TrUiQmvbLMUcshAxhOTX5oFrUWWBOT3PspIN5U5WbbO%2BqDkq7cksnjy2C4%2BZuYPmOkh%2BLXmHB0AANERVM%3D"
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+            properties:
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+        default:
+          description: unexpected error
+          schema:
+            type: object
+            properties:
+              tifResponseStatus:
+                $ref: "#/definitions/ErrorModel"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+definitions:
+  ErrorModel:
+    type: object
+    properties:
+      errorDesc:
+        type: string
+      resultCode:
+        type: string
+      errorCode:
+        type: string
+    required:
+      - resultCode
+      - errorCode
+      - errorDesc
+x-tif:
+  application: IPE
+  apiName: UPDATE_DOCUMENT_ATTACHMENT
+  apiVersion: "001"
+  messageType: XML
+  messageVersion: "2"
+  operationType: active
